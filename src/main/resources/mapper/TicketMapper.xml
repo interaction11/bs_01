@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.dao.TicketMapper">
+  <resultMap id="BaseResultMap" type="com.bs.entity.Ticket">
+    <id column="type" jdbcType="VARCHAR" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    type, title, price, time, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ticket
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+  <select id="selectPrice" resultType="java.lang.Integer">
+    select
+    price
+    from ticket
+    where type = #{type}
+  </select>
+  <select id="selectTitle" resultType="java.lang.String">
+    select
+      title
+    from ticket
+    where type = #{type}
+  </select>
+  <select id="selectByTime" resultType="com.bs.entity.Ticket">
+    select
+      type, title, price, time, creat_time
+    from ticket
+    where time = #{time,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ticket
+    where type = #{type,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bs.entity.Ticket">
+    insert into ticket (type, title, price, 
+      time, creat_time)
+    values (#{type,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+      #{time,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.entity.Ticket">
+    insert into ticket
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.entity.Ticket">
+    update ticket
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.entity.Ticket">
+    update ticket
+    set title = #{title,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      time = #{time,jdbcType=INTEGER}
+    where type = #{type,jdbcType=VARCHAR}
+  </update>
+</mapper>

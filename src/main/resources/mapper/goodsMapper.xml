@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bs.dao.GoodsMapper">
+    <select id="selectAll" resultType="com.bs.entity.Goods">
+        select username,ticket_type,ticket_title,ticket_price,creat_time from goods where username = #{username}
+    </select>
+    <insert id="insertOrder">
+        insert into goods (username,ticket_type,ticket_title,ticket_price)
+        values (#{username}, #{ticket_type},#{ticket_title},#{ticket_price})
+    </insert>
+    <select id="selectToken" resultType="com.bs.entity.Goods">
+        select id,username,ticket_type,ticket_title,ticket_price,creat_time from goods
+        where username = #{username} and is_delete = 0
+    </select>
+    <select id="selectMinId" resultType="java.lang.Integer">
+        select min(id) from goods where is_delete = 1 and username = #{username} and ticket_type = #{ticket_type}
+    </select>
+    <update id="updateToken">
+        update goods
+        set is_delete = 0
+        where username = #{username} and id = #{id} and ticket_type = #{ticket_type}
+    </update>
+    <delete id="deleteToken">
+        delete from goods
+        where username = #{username} and is_delete = 0 and ticket_type = #{ticket_type}
+    </delete>
+</mapper>

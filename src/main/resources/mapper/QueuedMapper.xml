@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bs.dao.QueuedMapper">
+    <select id="selectAll" resultType="com.bs.entity.Queued">
+	    select
+	           card_id,card_name,username,ticket_id,creat_time,num
+	    from
+	         queued
+	    where
+	          username= #{username}
+	</select>
+    <select id="selectById" resultType="com.bs.entity.Queued">
+        select
+               card_id,card_name,username,ticket_id,creat_time,num
+        from
+            queued
+        where
+              card_id = #{card_id}
+    </select>
+    <select id="selectRepeat" resultType="com.bs.entity.Queued">
+        select
+               card_id,card_name,username,ticket_id,creat_time,num
+        from
+            queued
+        where
+              card_id = #{card_id} and username= #{username}
+    </select>
+    <select id="selectUsername" resultType="java.lang.String">
+        select
+            username
+        from
+            queued
+        where
+            card_id = #{card_id} and num = 1
+    </select>
+    <insert id="insertQueued">
+        insert into
+            queued (card_id,card_name,username,ticket_id,num)
+        values
+               (#{card_id}, #{card_name}, #{username}, #{ticket_id}, #{num})
+    </insert>
+    <delete id="deleteQueued">
+        delete from queued
+        where username = #{username} and card_id = #{card_id} and num = 1
+    </delete>
+    <update id="updateNum" parameterType="com.bs.entity.Queued">
+        update queued
+        set num = num - 1
+        where card_id = #{card_id}
+    </update>
+</mapper>
