@@ -23,4 +23,9 @@
         set balance = balance+#{balance}
         where username = #{username}
     </update>
+    <update id="updateBalance" parameterType="com.bs.entity.User">
+        update user
+        set balance = #{balance}
+        where username = #{username}
+    </update>
 </mapper>

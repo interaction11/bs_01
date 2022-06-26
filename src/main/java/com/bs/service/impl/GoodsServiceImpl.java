@@ -38,7 +38,7 @@ public class GoodsServiceImpl implements GoodsService {
         if (count < 0){
             return 0;
         }
-        int x = userMapper.updateByUsername(count,username);
+        int x = userMapper.updateBalance(count,username);
         if (x != 1){
             return 0;
         }

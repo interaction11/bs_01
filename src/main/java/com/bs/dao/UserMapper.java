@@ -8,4 +8,5 @@ public interface UserMapper {
     Integer deleteByUsername(String username);
     Integer updateByUsername(Integer balance,String username);
     Integer selectBalance(String username);
+    Integer updateBalance(Integer balance,String username);
 }

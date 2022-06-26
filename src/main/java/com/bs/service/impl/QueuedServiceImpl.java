@@ -28,15 +28,15 @@ public class QueuedServiceImpl implements QueuedService {
     public Integer creatQueued(Queued queued) {
         Integer card_id = queued.getCard_id();
         String username = queued.getUsername();
+        Goods goods = goodsMapper.selectToken(username);
+        if (goods == null){
+            return 0;
+        }
         if (queuedMapper.selectRepeat(card_id,username) != null){
             return -1;
         }
         Card card = cardMapper.selectByPrimaryKey(card_id);
         queued.setCard_name(card.getTitle());
-        Goods goods = goodsMapper.selectToken(username);
-        if (goods == null){
-            return 0;
-        }
         queued.setTicket_id(goods.getId());
         List<Queued> id= queuedMapper.selectById(card_id);
         queued.setNum(id.size()+1);
